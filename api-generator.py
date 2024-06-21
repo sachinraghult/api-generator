@@ -1,6 +1,16 @@
 import json
 import pandas as pd
 from sqlalchemy import create_engine, inspect
+from sqlalchemy.types import INTEGER, VARCHAR, BOOLEAN, DATE, FLOAT, DECIMAL, TIMESTAMP
+
+def serialize_column(column):
+    return {
+        'name': column['name'],
+        'type': str(column['type']),
+        'nullable': column['nullable'],
+        'default': column['default'],
+        'primary_key': column['primary_key']
+    }
 
 # Replace with your actual database connection details
 DATABASE_TYPE = 'postgresql'
@@ -32,10 +42,10 @@ for table in tables:
     primary_key = inspector.get_primary_keys(table)
     
     schema[table] = {
-        'columns': columns,
-        'primary_key': primary_key,
-        'foreign_keys': foreign_keys
-    }
+            'columns': [serialize_column(col) for col in columns],
+            'primary_key': primary_key,
+            'foreign_keys': foreign_keys
+        }
 
 # Close the connection
 connection.close()

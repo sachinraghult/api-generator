@@ -55,8 +55,6 @@ try:
 except Exception as e:
     print(f"Error: {e}")
 
-import json
-
 # Example JSON schema (replace with your schema loading logic)
 json_schema = '''
 {
@@ -83,7 +81,12 @@ json_schema = '''
 '''
 
 def generate_java_classes(schema):
-    java_classes = []
+    java_classes = {
+        'entity': [],
+        'repository': [],
+        'service': [],
+        'controller': []
+    }
 
     for table_name, table_info in schema.items():
         # Generate entity class
@@ -102,7 +105,7 @@ public class {table_name.capitalize()} {{
              for col in table_info["columns"])}
 }}
 '''
-        java_classes.append(entity_class)
+        java_classes['entity'].append((f'{table_name.capitalize()}.java', entity_class))
 
         # Generate repository interface
         repository_class = f'''
@@ -114,7 +117,7 @@ public interface {table_name.capitalize()}Repository extends JpaRepository<{tabl
     // Additional methods can be added here if needed
 }}
 '''
-        java_classes.append(repository_class)
+        java_classes['repository'].append((f'{table_name.capitalize()}Repository.java', repository_class))
 
         # Generate service class
         service_class = f'''
@@ -152,7 +155,7 @@ public class {table_name.capitalize()}Service {{
     }}
 }}
 '''
-        java_classes.append(service_class)
+        java_classes['service'].append((f'{table_name.capitalize()}Service.java', service_class))
 
         # Generate controller class
         controller_class = f'''
@@ -195,14 +198,21 @@ public class {table_name.capitalize()}Controller {{
     }}
 }}
 '''
-        java_classes.append(controller_class)
+        java_classes['controller'].append((f'{table_name.capitalize()}Controller.java', controller_class))
 
     return java_classes
 
 def write_java_files(java_classes):
-    for index, java_class in enumerate(java_classes):
-        with open(f'{index + 1}.java', 'w') as file:
-            file.write(java_class)
+    # Create directories if they don't exist
+    for folder in ['entity', 'repository', 'service', 'controller']:
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+
+    # Write files to respective folders
+    for folder, files in java_classes.items():
+        for file_name, content in files:
+            with open(os.path.join(folder, file_name), 'w') as file:
+                file.write(content)
 
 # Parse JSON schema
 schema = json.loads(json_schema)
@@ -210,5 +220,5 @@ schema = json.loads(json_schema)
 # Generate Java classes
 java_classes = generate_java_classes(schema)
 
-# Write Java files
+# Write Java files to respective folders
 write_java_files(java_classes)

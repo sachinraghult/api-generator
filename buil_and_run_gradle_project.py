@@ -1,5 +1,6 @@
 import subprocess
 
+
 def run_gradle_tasks(project_path):
     # Run Gradle tasks
     try:
@@ -10,8 +11,9 @@ def run_gradle_tasks(project_path):
         print(f"An error occurred while running Gradle tasks: {e}")
 
 # Define project path and name
-project_path = '/path/to/project'
+project_path = '/home/your_username/projects'
 project_name = 'com.example.demo'
 
 # start the Gradle project
-run_gradle_tasks(os.path.join(project_path, project_name))
+create_gradle_project(project_path, project_name)
+run_gradle_tasks(os.path.join(project_path, project_name.split('.')[-1]))

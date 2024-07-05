@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-def build_and_run_gradle_project(project_path):
+def build_and_run_gradle_project(project_path, gradle_path):
     # Check if the given path is a valid directory
     if not os.path.isdir(project_path):
         print(f"The provided path {project_path} is not a valid directory.")
@@ -19,11 +19,11 @@ def build_and_run_gradle_project(project_path):
         os.chdir(project_path)
 
         # Execute Gradle clean and build
-        subprocess.check_call(['gradle', 'clean', 'build'])
+        subprocess.check_call([gradle_path, 'clean', 'build'])
         print("Gradle project built successfully.")
 
         # Execute Gradle bootRun
-        subprocess.check_call(['gradle', 'bootRun'])
+        subprocess.check_call([gradle_path, 'bootRun'])
         print("Gradle project is up and running.")
     except subprocess.CalledProcessError as e:
         print(f"An error occurred while running Gradle tasks: {e}")
@@ -32,8 +32,9 @@ def build_and_run_gradle_project(project_path):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
-# Define the path to your existing Gradle project
+# Define the path to your existing Gradle project and Gradle executable
 project_path = '/path/to/your/gradle/project'
+gradle_path = '/path/to/gradle/bin/gradle'  # Update this to your Gradle executable path
 
 # Build and run the Gradle project
-build_and_run_gradle_project(project_path)
+build_and_run_gradle_project(project_path, gradle_path)

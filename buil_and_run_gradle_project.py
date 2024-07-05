@@ -27,6 +27,10 @@ def build_and_run_gradle_project(project_path):
         print("Gradle project is up and running.")
     except subprocess.CalledProcessError as e:
         print(f"An error occurred while running Gradle tasks: {e}")
+    except FileNotFoundError:
+        print("Gradle is not installed or not found in your PATH.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
 # Define the path to your existing Gradle project
 project_path = '/path/to/your/gradle/project'

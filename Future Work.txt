@@ -25,8 +25,8 @@ A more advanced iteration of the tool could leverage machine learning to optimiz
 8. API Versioning and Migration Support
 In dynamic environments where database schemas evolve over time, future versions of the tool could include robust support for API versioning and database migrations. This would allow the tool to automatically generate new versions of APIs as the underlying schema changes, while maintaining backward compatibility with older versions. Additionally, automated migration scripts could be generated to help transition the database to new schema versions smoothly.
 
-9. Plug-in Architecture for Extensibility
-To allow for community-driven enhancements and custom use cases, the tool could be designed with a plug-in architecture. This would enable developers to create and share custom plug-ins that extend the tool’s functionality, such as adding support for new databases, frameworks, or custom API generation logic tailored to specific business needs.
+9. GraphQL Integration
+Future work could focus on integrating GraphQL support into the accelerator, allowing developers to generate GraphQL APIs alongside traditional RESTful APIs. This would enable more flexible and efficient data querying, giving clients the ability to request exactly the data they need. The tool could automatically generate GraphQL schemas based on the extracted data model and handle complex queries and mutations. This addition would enhance the accelerator's versatility, catering to modern development needs where precise and optimized data retrieval is crucial.
 
 10. API Analytics and Monitoring
 Future enhancements could include integration with API analytics and monitoring tools, providing developers with real-time insights into API usage, performance metrics, and error rates. This would enable proactive management of the APIs, helping to identify and address issues before they impact end users. Additionally, the tool could provide automated recommendations based on analytics data to further optimize the APIs.

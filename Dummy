@@ -80,3 +80,61 @@ public class Main {
         System.out.println(sanitized);
     }
 }
+
+
+
+import org.owasp.esapi.codecs.Codec;
+import org.owasp.esapi.codecs.PushbackString;
+
+public class CustomHTMLEntityCodec extends Codec {
+
+    @Override
+    public String encode(char[] immune, String input) {
+        if (input == null) {
+            return null;
+        }
+
+        StringBuilder encoded = new StringBuilder();
+
+        for (char c : input.toCharArray()) {
+            encoded.append(encodeCharacter(immune, c));
+        }
+
+        return encoded.toString();
+    }
+
+    @Override
+    public String encodeCharacter(char[] immune, Character c) {
+        // Only encode '<', '>', and '&'
+        switch (c) {
+            case '<':
+                return "&lt;";
+            case '>':
+                return "&gt;";
+            case '&':
+                return "&amp;";
+            default:
+                return c.toString(); // Return other characters as is
+        }
+    }
+
+    @Override
+    public Character decodeCharacter(PushbackString input) {
+        input.mark();
+        String possibleEntity = input.peek(6); // Peek to check if it's an entity (e.g., &amp;)
+
+        if (possibleEntity.startsWith("&lt;")) {
+            input.advance(4); // Advance over "&lt;"
+            return '<';
+        } else if (possibleEntity.startsWith("&gt;")) {
+            input.advance(4); // Advance over "&gt;"
+            return '>';
+        } else if (possibleEntity.startsWith("&amp;")) {
+            input.advance(5); // Advance over "&amp;"
+            return '&';
+        } else {
+            input.reset();
+            return null;
+        }
+    }
+}

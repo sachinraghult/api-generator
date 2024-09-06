@@ -1,0 +1,82 @@
+import org.owasp.esapi.codecs.Codec;
+
+public class CustomHTMLEntityCodec extends Codec {
+
+    @Override
+    public String encodeCharacter(char[] immune, Character c) {
+        // Only encode '<', '>', and '&'
+        switch (c) {
+            case '<':
+                return "&lt;";
+            case '>':
+                return "&gt;";
+            case '&':
+                return "&amp;";
+            default:
+                return c.toString(); // Return other characters as is
+        }
+    }
+
+    @Override
+    public Character decodeCharacter(PushbackString input) {
+        // Handle decoding of the special characters if necessary
+        input.mark();
+        String possibleEntity = input.peek(6); // Peek to check if it's an entity (e.g., &amp;)
+        
+        if (possibleEntity.startsWith("&lt;")) {
+            input.advance(4); // Advance over "&lt;"
+            return '<';
+        } else if (possibleEntity.startsWith("&gt;")) {
+            input.advance(4); // Advance over "&gt;"
+            return '>';
+        } else if (possibleEntity.startsWith("&amp;")) {
+            input.advance(5); // Advance over "&amp;"
+            return '&';
+        } else {
+            input.reset();
+            return null;
+        }
+    }
+}
+
+
+
+import org.owasp.esapi.Encoder;
+import org.owasp.esapi.reference.DefaultEncoder;
+
+import java.util.Collections;
+
+public class CustomEncoder {
+
+    // Create a singleton instance of the custom encoder
+    private static final Encoder customEncoder = new CustomEncoderInstance();
+
+    public static Encoder getCustomEncoder() {
+        return customEncoder;
+    }
+
+    // Inner static class extending DefaultEncoder and using the custom codec
+    private static class CustomEncoderInstance extends DefaultEncoder {
+        public CustomEncoderInstance() {
+            // Initialize the encoder with the custom HTML entity codec
+            super(Collections.singletonList(new CustomHTMLEntityCodec()));
+        }
+    }
+}
+
+
+
+public class Main {
+    public static void main(String[] args) {
+        String input = "<script>alert('XSS')</script> & Some other text";
+        
+        // Get the custom encoder
+        Encoder encoder = CustomEncoder.getCustomEncoder();
+        
+        // Encode the input
+        String sanitized = encoder.encodeForHTML(input);
+        
+        // Output the sanitized string
+        System.out.println(sanitized);
+    }
+}

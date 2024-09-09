@@ -138,3 +138,39 @@ public class CustomHTMLEntityCodec extends Codec {
         }
     }
 }
+
+
+
+import org.owasp.esapi.ESAPI;
+import org.owasp.esapi.Encoder;
+
+public class CustomSanitizer {
+
+    private static final Encoder encoder = ESAPI.encoder();
+
+    public static String sanitize(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+
+        StringBuilder sanitized = new StringBuilder();
+
+        // Traverse each character in the input string
+        for (char c : input.toCharArray()) {
+            switch (c) {
+                case '<':
+                case '>':
+                case '&':
+                    // Use ESAPI to encode the specific characters
+                    sanitized.append(encoder.encodeForHTML(String.valueOf(c)));
+                    break;
+                default:
+                    // Append other characters as is
+                    sanitized.append(c);
+                    break;
+            }
+        }
+
+        return sanitized.toString();
+    }
+}

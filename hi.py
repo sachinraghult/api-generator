@@ -32,3 +32,53 @@ def get_sample():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+
+
+
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route("/api/sample", methods=["POST"])
+def mcp_handler():
+    data = request.get_json(force=True)
+
+    # Validate JSON-RPC 2.0 basic structure
+    if not data or "jsonrpc" not in data or data["jsonrpc"] != "2.0":
+        return jsonify({
+            "jsonrpc": "2.0",
+            "error": {
+                "code": -32600,
+                "message": "Invalid Request"
+            },
+            "id": data.get("id") if data else None
+        }), 400
+
+    method = data.get("method")
+    params = data.get("params", {})
+    request_id = data.get("id")
+
+    # Sample implementation
+    if method == "get_hello":
+        result = {"message": "Hello from MCP local server!"}
+    else:
+        return jsonify({
+            "jsonrpc": "2.0",
+            "error": {
+                "code": -32601,
+                "message": f"Method '{method}' not found"
+            },
+            "id": request_id
+        }), 404
+
+    return jsonify({
+        "jsonrpc": "2.0",
+        "result": result,
+        "id": request_id
+    }), 200
+
+if __name__ == "__main__":
+    app.run(debug=True)

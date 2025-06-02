@@ -82,3 +82,55 @@ def mcp_handler():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+
+
+
+
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route("/api/sample", methods=["GET", "POST"])
+def mcp_handler():
+    if request.method == "GET":
+        # Used by DevX agent to validate the server is up
+        return jsonify({"status": "ok"}), 200
+
+    data = request.get_json(force=True)
+    if not data or data.get("jsonrpc") != "2.0":
+        return jsonify({
+            "jsonrpc": "2.0",
+            "error": {
+                "code": -32600,
+                "message": "Invalid Request"
+            },
+            "id": data.get("id") if data else None
+        }), 400
+
+    method = data.get("method")
+    params = data.get("params", {})
+    request_id = data.get("id")
+
+    if method == "get_hello":
+        result = {"message": "Hello from MCP local server!"}
+    else:
+        return jsonify({
+            "jsonrpc": "2.0",
+            "error": {
+                "code": -32601,
+                "message": f"Method '{method}' not found"
+            },
+            "id": request_id
+        }), 404
+
+    return jsonify({
+        "jsonrpc": "2.0",
+        "result": result,
+        "id": request_id
+    }), 200
+
+if __name__ == "__main__":
+    app.run(debug=True)

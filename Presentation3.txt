@@ -1,0 +1,334 @@
+Got it ✅
+Here’s your updated and expanded professional Wells Fargo–themed presentation flow, with the extra slides you requested.
+
+
+---
+
+Slide 1 – Title Slide
+
+Title:
+Agentic AI – MCP Bank Client-Server POC
+Subtitle: Leveraging DevX Agent, GitHub Copilot, and GPT-4o for Intelligent Banking Workflows
+Footer: Wells Fargo Internal | [Your Name] | Software Engineer
+
+
+---
+
+Slide 2 – Agenda
+
+Introduction to MCP & Agentic AI
+
+AI Evolution to Agentic AI
+
+Before vs After MCP
+
+Problem Statement
+
+Project Objective & Overview
+
+Architecture of MCP Bank Client-Server POC
+
+Workflow & Sequence Diagram
+
+Technical Deep Dive
+
+Live Demo
+
+Benefits & Potential Impact
+
+Future Scope
+
+Conclusion
+
+Q&A
+
+
+
+---
+
+Slide 3 – AI Evolution to Agentic AI
+
+Content:
+
+Rule-based Systems → Early AI: followed predefined logic
+
+Machine Learning → Models trained on datasets, improved predictions
+
+Generative AI → Models like GPT create human-like responses
+
+Agentic AI → AI that can reason, plan, and act autonomously using tools & APIs
+
+
+Speaker Notes:
+
+> This evolution shows how we went from simple rule-following bots to AI that can independently decide what to do, and how to do it.
+
+
+
+
+---
+
+Slide 4 – Before vs After MCP
+
+Content (Two-column table):
+
+Before MCP	After MCP
+
+AI relied only on static knowledge	AI can fetch live domain-specific data
+Hard to integrate with secure enterprise APIs	Standard protocol for secure API access
+One-off, disconnected tool calls	Multi-step, structured workflows
+Limited context retention	Seamless contextual conversations
+
+
+Speaker Notes:
+
+> MCP bridges the gap between AI’s reasoning ability and enterprise-grade secure system access.
+
+
+
+
+---
+
+Slide 5 – Problem Statement
+
+Content:
+
+Developers face friction in accessing secure banking data for testing/analysis
+
+Switching between coding environment & multiple banking APIs is inefficient
+
+Risk of misinterpretation of raw API data by humans
+
+No standardized AI integration path to banking systems
+
+
+Speaker Notes:
+
+> Our challenge is to streamline and secure the process of getting useful banking data directly within the developer’s environment.
+
+
+
+
+---
+
+Slide 6 – Project Objective
+
+Enable natural language banking queries inside GitHub Copilot
+
+Integrate DevX Agent as the host environment for MCP Client
+
+Use GPT-4o for reasoning and domain-specific context
+
+Securely connect to Bank MCP Server for account, loan, and transaction data
+
+
+
+---
+
+Slide 7 – MCP Bank Client-Server Architecture
+
+(Insert the professional architecture diagram we created earlier)
+
+
+---
+
+Slide 8 – Workflow / Sequence Diagram
+
+(Insert the professional UML sequence diagram we finalized)
+
+
+---
+
+Slide 9 – Technical Deep Dive
+
+DevX Agent → orchestrates GPT-4o + MCP Client
+
+MCP Client → sends structured requests to MCP Server
+
+Bank MCP Server → returns raw banking data securely
+
+GPT-4o → processes and formats for human readability
+
+Security → authenticated and encrypted communication
+
+
+
+---
+
+Slide 10 – Live Demo
+
+Title: Real-time Interaction with Bank MCP Server via DevX Agent in GitHub Copilot
+
+Show:
+
+1. Natural language query in Copilot
+
+
+2. DevX Agent interpreting & calling MCP Client
+
+
+3. Bank MCP Server response → GPT-4o formatting
+
+
+4. Final answer inside Copilot
+
+
+
+Highlight speed, accuracy, and context-awareness
+
+
+
+---
+
+Slide 11 – Benefits
+
+Faster development – no context switching
+
+Higher security – MCP-enforced data access rules
+
+Scalable – works across multiple banking domains
+
+Smarter AI responses – live data + reasoning
+
+
+
+---
+
+Slide 12 – Future Scope
+
+Add write operations with approvals
+
+Multi-agent orchestration
+
+Expand to cross-domain MCP servers (compliance, payments)
+
+Context retention for continuous conversations
+
+Real-time streaming transaction data
+
+
+
+---
+
+Slide 13 – Conclusion
+
+AI has evolved into Agentic AI, enabling autonomous, goal-driven operations
+
+MCP makes AI enterprise-ready with secure, structured API access
+
+Our POC proves that this model can work seamlessly for banking use cases
+
+Next step: Scale beyond the POC into production-grade integrations
+
+
+
+---
+
+Slide 14 – Q&A
+
+Title: Thank You – Questions?
+Footer: Wells Fargo Internal | [Your Name]
+
+
+---
+
+I can now compile this into a single PowerPoint with:
+
+Wells Fargo color palette (deep red & gold)
+
+Our diagrams embedded
+
+Professional icons (user, agent, GPT, bank server)
+
+Minimal, clean layout with consistent typography
+
+
+Do you want me to now prepare that PPT with this exact content and the diagrams we already have?
+That way it will be presentation-ready in one go.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Alright — I’ll rewrite AI Evolution so it’s crisper, more engaging, and forward-looking, and I’ll make Problem Statement less like a “pain points” list and more like a visionary statement showing how Agentic AI + MCP is transformative.
+
+
+---
+
+Slide 3 – AI Evolution to Agentic AI (Revised)
+
+Title: From Rule-based Bots to Autonomous Agentic AI
+
+Timeline Style (4 Stages):
+
+1. Rule-Based Automation – Followed strict “if-then” rules, no adaptability.
+
+
+2. Machine Learning – Learned patterns from data, still limited to predefined tasks.
+
+
+3. Generative AI – Produced human-like text, images, and code; creative but passive.
+
+
+4. Agentic AI (Today) – Understands goals, plans multi-step actions, and uses tools like MCP to interact with real-world systems securely and autonomously.
+
+
+
+Key takeaway line at the bottom:
+
+> Agentic AI is not just answering questions—it’s getting things done with secure, live system access.
+
+
+
+
+---
+
+Slide 5 – Problem Statement (Reframed as Visionary)
+
+Title: The Opportunity with Agentic AI + MCP
+
+Content:
+
+In the banking world, data is valuable but trapped behind secure systems.
+
+Traditional AI can explain concepts, but cannot take direct, secure action on enterprise systems.
+
+MCP changes the game: a standardized, secure bridge between AI and enterprise APIs.
+
+With Agentic AI + MCP, we can:
+
+Give AI the ability to plan and execute banking workflows end-to-end
+
+Maintain security, compliance, and governance
+
+Unlock real-time insights directly inside developer and business tools
+
+
+This is the future of AI in banking — autonomous, safe, and deeply integrated into core systems.
+
+
+Key takeaway line at the bottom:
+
+> We’re moving from “AI as an assistant” to “AI as a trusted, secure co-worker.”
+
+
+
+
+---
+
+If you want, I can also make this AI Evolution slide more visual—like a horizontal progression with small icons (gear for rule-based, graph for ML, magic wand for GenAI, rocket for Agentic AI).
+
+Do you want me to go ahead and prepare both updated slides in that clean visual Wells Fargo–themed style so they’re ready to drop into the deck?
+

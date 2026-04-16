@@ -1,176 +1,164 @@
-import org.owasp.esapi.codecs.Codec;
+Here are the speaker notes for your "Mastering Copilot Agents" seminar, designed to accompany the latest visual slide deck.
+Slide 1: Title Slide
+Speaker Note: Welcome everyone. Today we’re diving into the next evolution of AI-powered development: GitHub Copilot Custom Agents. We’ll move from general-purpose chat to specialized, role-driven assistants that live right in your repository
+. Our goal today is to go from the basics to actually building your first custom agent
+.
 
-public class CustomHTMLEntityCodec extends Codec {
+--------------------------------------------------------------------------------
+Slide 2: What are Custom Agents?
+Speaker Note: Think of a Custom Agent as a specialized assistant with a persistent persona, domain expertise, and specific tool access
+. Unlike a standard chat session, these agents are configured to adopt a role—like a Security Reviewer or a Planner—shaping how the AI thinks and communicates throughout the entire session
+.
 
-    @Override
-    public String encodeCharacter(char[] immune, Character c) {
-        // Only encode '<', '>', and '&'
-        switch (c) {
-            case '<':
-                return "&lt;";
-            case '>':
-                return "&gt;";
-            case '&':
-                return "&amp;";
-            default:
-                return c.toString(); // Return other characters as is
-        }
-    }
+--------------------------------------------------------------------------------
+Slide 3: The Customization Hierarchy
+Speaker Note: It’s easy to get confused by all the new terms, so let's look at the hierarchy.
+Instructions are "always-on" rules for the whole team
+.
+Prompts are manual, repeatable slash commands
+.
+Skills are reusable, multi-step workflows
+.
+Custom Agents (formerly known as Chat Modes) provide role and tool boundaries
+. You pick them when you need a specific specialist for a specific job
+.
 
-    @Override
-    public Character decodeCharacter(PushbackString input) {
-        // Handle decoding of the special characters if necessary
-        input.mark();
-        String possibleEntity = input.peek(6); // Peek to check if it's an entity (e.g., &amp;)
-        
-        if (possibleEntity.startsWith("&lt;")) {
-            input.advance(4); // Advance over "&lt;"
-            return '<';
-        } else if (possibleEntity.startsWith("&gt;")) {
-            input.advance(4); // Advance over "&gt;"
-            return '>';
-        } else if (possibleEntity.startsWith("&amp;")) {
-            input.advance(5); // Advance over "&amp;"
-            return '&';
-        } else {
-            input.reset();
-            return null;
-        }
-    }
-}
+--------------------------------------------------------------------------------
+Slide 4: Anatomy of .agent.md
+Speaker Note: Every agent is defined by a simple Markdown file ending in .agent.md
+. It has two parts:
+YAML Frontmatter: This is the "brain" configuration where you name the agent, choose the AI model, and list available tools like codebase or terminal
+.
+Markdown Body: This is the "persona" instructions where you define the working style and specific expertise using #tool: syntax to reference capabilities
+.
 
+--------------------------------------------------------------------------------
+Slide 5: Storage and Selection
+Speaker Note: Where do these live? For team-wide access, place them in the .github/agents folder of your repository
+. For personal use across all projects, use ~/.copilot/agents
+. Once they're in the right folder, they appear automatically in the Agent Picker in VS Code, or you can invoke them directly by @mentioning their name
+.
 
+--------------------------------------------------------------------------------
+Slide 6: Connecting to the Real World (MCP)
+Speaker Note: Agents become "supercharged" when you connect them to live data using the Model Context Protocol (MCP)
+. This allows your agent to query your actual databases, check GitHub issues, or pull cloud metadata in real-time
+. You just list the MCP server in the agent's frontmatter, and it becomes part of their toolset
+.
 
-import org.owasp.esapi.Encoder;
-import org.owasp.esapi.reference.DefaultEncoder;
+--------------------------------------------------------------------------------
+Slide 7: Sequential Workflows (Handoffs)
+Speaker Note: One of the most powerful features is Handoffs
+. You can chain agents together to create a "guided workflow"
+. For example, a "Planning" agent can generate a strategy and then provide a "Handoff" button that passes the context to an "Implementation" agent to write the code
+.
 
-import java.util.Collections;
+--------------------------------------------------------------------------------
+Slide 8: Hands-On: Build Your Agent
+Speaker Note: Now it's your turn. We're going to build a Security Reviewer or a Sarcastic Code Reviewer
+.
+Step 1: Create a new file in .github/agents/.
+Step 2: Define your frontmatter—limit your tools to "read-only" for security
+.
+Step 3: Write the instructions. Be specific! Instead of "Senior Dev," try "Expert in React 18+ focused on performance and security"
+.
 
-public class CustomEncoder {
+--------------------------------------------------------------------------------
+Slide 9: Professional Best Practices
+Speaker Note: To make these agents effective, follow three rules:
+The 4x6 Rule: Keep your instructions concise—no more than 4-6 lines/words per core concept
+.
+Code Over Theory: One real code example in your instructions is better than three paragraphs of text
+.
+Strict Boundaries: Clearly define "Always/Never" rules
+. For example: "Never modify production configs" or "Always check for unused variables"
+.
 
-    // Create a singleton instance of the custom encoder
-    private static final Encoder customEncoder = new CustomEncoderInstance();
-
-    public static Encoder getCustomEncoder() {
-        return customEncoder;
-    }
-
-    // Inner static class extending DefaultEncoder and using the custom codec
-    private static class CustomEncoderInstance extends DefaultEncoder {
-        public CustomEncoderInstance() {
-            // Initialize the encoder with the custom HTML entity codec
-            super(Collections.singletonList(new CustomHTMLEntityCodec()));
-        }
-    }
-}
-
-
-
-public class Main {
-    public static void main(String[] args) {
-        String input = "<script>alert('XSS')</script> & Some other text";
-        
-        // Get the custom encoder
-        Encoder encoder = CustomEncoder.getCustomEncoder();
-        
-        // Encode the input
-        String sanitized = encoder.encodeForHTML(input);
-        
-        // Output the sanitized string
-        System.out.println(sanitized);
-    }
-}
-
-
-
-import org.owasp.esapi.codecs.Codec;
-import org.owasp.esapi.codecs.PushbackString;
-
-public class CustomHTMLEntityCodec extends Codec {
-
-    @Override
-    public String encode(char[] immune, String input) {
-        if (input == null) {
-            return null;
-        }
-
-        StringBuilder encoded = new StringBuilder();
-
-        for (char c : input.toCharArray()) {
-            encoded.append(encodeCharacter(immune, c));
-        }
-
-        return encoded.toString();
-    }
-
-    @Override
-    public String encodeCharacter(char[] immune, Character c) {
-        // Only encode '<', '>', and '&'
-        switch (c) {
-            case '<':
-                return "&lt;";
-            case '>':
-                return "&gt;";
-            case '&':
-                return "&amp;";
-            default:
-                return c.toString(); // Return other characters as is
-        }
-    }
-
-    @Override
-    public Character decodeCharacter(PushbackString input) {
-        input.mark();
-        String possibleEntity = input.peek(6); // Peek to check if it's an entity (e.g., &amp;)
-
-        if (possibleEntity.startsWith("&lt;")) {
-            input.advance(4); // Advance over "&lt;"
-            return '<';
-        } else if (possibleEntity.startsWith("&gt;")) {
-            input.advance(4); // Advance over "&gt;"
-            return '>';
-        } else if (possibleEntity.startsWith("&amp;")) {
-            input.advance(5); // Advance over "&amp;"
-            return '&';
-        } else {
-            input.reset();
-            return null;
-        }
-    }
-}
+--------------------------------------------------------------------------------
+Slide 10: Closing & Call to Action
+Speaker Note: Custom agents are about efficiency and specialization
+. Don't build a "general helper"—build a team of experts
+. I encourage everyone to start with one simple task, iterate on it, and share it with the team so we can all code faster and safer together
+. Questions?
 
 
 
-import org.owasp.esapi.ESAPI;
-import org.owasp.esapi.Encoder;
 
-public class CustomSanitizer {
 
-    private static final Encoder encoder = ESAPI.encoder();
 
-    public static String sanitize(String input) {
-        if (input == null || input.isEmpty()) {
-            return input;
-        }
 
-        StringBuilder sanitized = new StringBuilder();
 
-        // Traverse each character in the input string
-        for (char c : input.toCharArray()) {
-            switch (c) {
-                case '<':
-                case '>':
-                case '&':
-                    // Use ESAPI to encode the specific characters
-                    sanitized.append(encoder.encodeForHTML(String.valueOf(c)));
-                    break;
-                default:
-                    // Append other characters as is
-                    sanitized.append(c);
-                    break;
-            }
-        }
 
-        return sanitized.toString();
-    }
-}
+Based on the sources and the structure of your seminar, here is an elaboration on the key concepts for Slide 3 (The Customization Hierarchy) and the advanced content likely appearing on Slide 14 (Security and Specialized Personas).
+Slide 3: The Customization Hierarchy
+This slide provides the "Decision Guide" for developers to choose the right tool for the job. The elaboration focuses on the trigger and scope of each customization layer:
+Behavioral Layer (Instructions): These are "always-on" and automatically added to every chat request. They are best for global standards, such as "always use four-space indentation" or "apply specific naming conventions to IaC resources"
+.
+Invocation Layer (Prompt Files): These act as manual, named slash commands (e.g., /security-review). Use these for one-off tasks where you need a repeatable "play" to run against a specific file or code selection
+.
+Persona Layer (Custom Agents): Unlike instructions, these are selected by the user (or @mentioned). They define a persistent role and, crucially, limit tool access (e.g., a "Planning" agent that can read code but never edit it)
+.
+Packaging Layer (Skills): These are reusable "runbooks" that include not just instructions, but bundled scripts and templates. They are auto-discovered by Copilot when relevant to the task
+.
+Connectivity Layer (MCP): The Model Context Protocol is the "missing piece" for external data. It allows agents to pull live context from external systems like GitHub issues, databases, or cloud metadata
+.
+Policy Layer (Hooks): If instructions are "advice," hooks are hard enforcement. They can approve or deny tool executions (like blocking a command that targets a production database) before they happen
+.
+
+--------------------------------------------------------------------------------
+Slide 14: Security, Guardrails, and Specialized Personas
+This slide covers the "Safety-First" approach to building agents, specifically for roles like a Security Reviewer or a Domain Expert.
+The Principle of Least Privilege: One of the most critical security practices is restricting which tools an agent can use. For instance, a Security Reviewer agent should be configured in the YAML frontmatter with read-only tools (like codebase) while explicitly excluding "destructive" tools like terminal or edit
+.
+Defining Strict Boundaries: Effective agents use "Always/Never" rules to prevent hallucinations or risky behavior
+. Examples include:
+"Never modify production configuration files."
+"Always check for unused variables before finalizing a refactor"
+.
+"Ask for user confirmation before executing any npm command"
+.
+Persona Specificity: To make these agents "meaningful," they must avoid being vague. Instead of a general "Frontend Dev," define a specialist like "Expert in React 18+ focused on performance"
+. This ensures the agent uses the latest hooks (like useMemo) rather than outdated patterns it might have in its general training data
+.
+Organization-Level Deployment: For team collaboration, these agents can be shared at the GitHub Organization level. This allows the entire company to access the same verified "Security Specialist" or "Cloud Architect" agent without every developer needing to copy files manually
+.
+Slide 14 is synthesis: the ultimate copilot stack
+
+For Slide 14: Synthesis: The Ultimate Copilot Stack, the focus is on how all the individual customization "primitives" work together as a composable system rather than competing features
+. This slide serves as the "grand finale" of the technical section, showing your coworkers how to architect a professional-grade AI environment.
+Slide Content: Synthesis: The Ultimate Copilot Stack
+Visual Recommendation: A layered "Stack" diagram where Hooks sit at the bottom (enforcement), Instructions form the foundation (behavior), and MCP acts as the bridge to the side (connectivity)
+.
+Layer 1: The Behavior Layer (Instructions)
+Always-on standards for the entire workspace or organization
+.
+Layer 2: The Persona & Boundary Layer (Custom Agents)
+Persistent specialists (Planning, Security, Implementation) with defined tool limits
+.
+Layer 3: The Task & Workflow Layer (Prompts & Skills)
+On-demand actions and multi-step runbooks like /security-review or /scaffold-module
+.
+Layer 4: The Connectivity Layer (MCP)
+Live access to external systems like GitHub Issues, Jira, or cloud metadata
+.
+Layer 5: The Policy Enforcement Layer (Hooks)
+Hard gates that approve or deny tool executions based on security rules
+.
+
+--------------------------------------------------------------------------------
+Speaker Notes for Slide 14
+"The key takeaway for this slide is that these features are not overlapping—they are composable
+.
+Think of it as a hierarchy of control
+. You start with Instructions for always-on guidance, like ensuring your team always uses specific naming conventions
+. On top of that, you build Custom Agents to act as your specialists, like a 'Cost Optimizer' that has the persona of an auditor but is restricted from making actual code changes
+.
+When those agents need to actually do something complex, like running a diagnostic script or generating a post-mortem, they invoke Skills—which are portable runbooks that include scripts and templates
+. To make sure your agents aren't hallucinating data, you plug in MCP, allowing them to query live GitHub issues or cloudSkus in real-time
+.
+Finally, you protect the entire stack with Hooks. If an instruction is 'advice,' a hook is 'enforcement'
+. A preToolUse hook can deterministically block an agent from deleting a production database, even if the AI thinks it's a good idea
+.
+Pro-tip for the team: Always use the smallest primitive that solves the problem
+. Don't build a complex agent if a simple instruction file will do the job
+."

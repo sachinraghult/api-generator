@@ -1,0 +1,18 @@
+Slide Visual: A shipping container labeled "Transport Layer" wrapping "JSON-RPC 2.0 Messages", splitting into two distinct pipes: Local (stdio) and Remote (HTTP/SSE).
+Speaker Notes: "How does the AI actually talk to your tools? That is the Transport Layer
+. It securely manages the communication channels and message framing so you don't have to worry about the networking
+.
+Depending on where your server lives, it takes one of two routes:
+1. The Local Route (stdio) If your server and AI app are on the same machine, MCP uses standard input and output
+. This is direct process-to-process communication with zero network overhead, making it lightning-fast and highly secure
+.
+2. The Remote Route (Streamable HTTP) If your server is in the cloud, MCP uses HTTP
+. The AI sends requests via HTTP POST and receives real-time streaming responses via Server-Sent Events (SSE)
+. To keep these internet connections secure, it strongly integrates with OAuth 2.1, ensuring the AI only accesses remote data if it has an explicit, scoped token
+.
+The Key Takeaway: The Transport Layer completely abstracts the networking
+. Whether you run a lightning-fast local server or a secure cloud server, your underlying JSON-RPC 2.0 messages remain exactly the same
+."
+Start typing…
+(10)
+Notebo

@@ -21,3 +21,51 @@ Notebo
 JSON-RPC 2.0 provides the structured, predictable formatting that allows an AI model to seamlessly discover tools, fetch resources, and interact with external systems under a single, universal standard
 
 Standard JSON-RPC 2.0 requests include a unique id field. This ensures that when an AI client sends a request, it can reliably correlate the server's eventual response back to that exact request
+
+
+
+
+Slide: The Core Architecture of MCP
+Slide Visual: Diagram showing MCP Host -> MCP Clients -> MCP Servers -> Data Sources.
+Speaker Notes: "Let’s break down the architecture into four simple parts
+.
+The MCP Host: This is your AI application, like Cursor or Claude Desktop
+.
+The MCP Client: Living inside the host, it manages a strict one-to-one connection with a server
+.
+The MCP Server: The lightweight program you build to expose your capabilities
+.
+Data Sources: Your actual databases, files, or external APIs
+. The brilliance here is secure isolation
+. Because every client-server pair has a dedicated session, permissions never bleed across domains—your local file tool won't accidentally leak data to a web search tool
+."
+
+--------------------------------------------------------------------------------
+Slide: The MCP Session Life-Cycle
+Slide Visual: Flowchart: Initialization -> Operation -> Shutdown.
+Speaker Notes: "Unlike stateless REST APIs, MCP uses stateful sessions to remember context
+. Every connection follows three strict phases:
+Initialization: The handshake
+. The client and server exchange their capabilities so both sides know exactly what features are supported before doing any work
+.
+Operation: The actual exchange of tools, prompts, and resources
+. Because capabilities are already negotiated, these subsequent requests are incredibly compact and lightning-fast
+.
+Shutdown: The graceful termination of the connection when the AI is done
+."
+
+--------------------------------------------------------------------------------
+Slide: Elicitation and Notifications
+Slide Visual: Split screen. Left: Server asking for user permission. Right: Server pushing live updates.
+Speaker Notes: "Two advanced features make MCP incredibly dynamic:
+Elicitation keeps humans in the loop
+. Normally the AI drives the interaction, but with elicitation, the server can pause a workflow to ask the human user for input or approval
+. If the AI tries to drop a database table, the server can prompt the user: 'Are you sure?'
+.
+Notifications provide real-time synchronization
+. Instead of the AI wasting resources constantly polling a server for changes, the server instantly pushes a notification if a file updates or a new tool is added
+. Your AI agent always has perfectly fresh data
+."
+Start typing…
+(10)
+NotebookLM can be inaccurate; please double-check its 

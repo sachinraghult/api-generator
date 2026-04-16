@@ -1,0 +1,59 @@
+Give me the speaker notes for each slides of the deck, explaining very clear and understandable way
+
+The system was unable to answer.
+
+Give me the speaker notes for each slides of the deck, explaining very clear and understandable way
+
+Here are the speaker notes for your revised Model Context Protocol (MCP) slide deck. I have tailored these notes to be clear, engaging, and perfectly aligned with your updated slides, including the new banking assistant hands-on session.
+
+--------------------------------------------------------------------------------
+Slide 1: Title Slide
+Slide Visual: Bold title "Model Context Protocol (MCP): The USB-C for AI Applications." Subtitle: "Building the Next Generation of AI Integrations." Speaker Notes: "Welcome, everyone! Today we are going to talk about a massive shift in how we build AI applications: the Model Context Protocol, or MCP. Whether you are still trying to figure out exactly how these AI models work under the hood, or you are actively writing code and building tools every day, this session is for you. We’re going to cover the absolute basics, understand the architecture, and even get our hands dirty by building a functional AI banking assistant together. Let’s dive in."
+Slide 2: The Core AI Problem & What is MCP?
+Slide Visual: Icon of an AI brain disconnected from a local laptop and a database. Next to it, an icon of a USB-C cable. Speaker Notes: "Let’s start with the biggest limitation of AI right now. Large Language Models like Claude or ChatGPT are incredibly smart, but out of the box, they are completely isolated. They don’t know about your local files, your company's databases, or your live APIs
+. Historically, giving them this context was a nightmare. Enter the Model Context Protocol. Think of MCP as the 'USB-C port for AI applications'
+. Just like USB-C standardized how we connect monitors, phones, and laptops, MCP provides one open, standardized way to connect AI models to external systems
+."
+Slide 3: Solving the Integration Mess
+Slide Visual: A visual showing many different AI models connecting to a single, unified MCP hub, which then connects to various tools (GitHub, Slack, Databases). Speaker Notes: "Before MCP, the industry faced a massive integration headache. Every time you wanted an AI model to talk to a tool—say, Slack or GitHub—you had to write a custom, bespoke integration for that specific model and that specific tool
+. MCP standardizes this entire process. Now, tool creators only have to build an integration once by exposing their functionalities through an MCP server. Once that's done, any AI application that supports MCP can seamlessly interact with those tools without any additional custom code
+. It completely eliminates the need for endless, messy custom adapters."
+Slide 4: Understanding the MCP Architecture
+Slide Visual: A clean, clear, updated diagram showing the MCP Host, MCP Client, MCP Server, and Data Sources. Speaker Notes: "Let’s look at how this actually works under the hood. The architecture is elegantly simple and consists of four main parts:
+The MCP Host: This is the AI application itself, like the Cursor code editor or Claude Desktop
+.
+The MCP Client: This lives inside the Host. It initiates the connection and routes requests
+.
+The MCP Server: This is the lightweight program you build. It safely exposes your data and tools
+.
+Data Sources: This is where your data lives, whether it’s a local SQLite database, a file system, or an external API
+. Locally, the client and server talk directly through standard input and output channels (stdio), meaning it is incredibly fast and secure, with no network overhead
+."
+Slide 5: MCP vs. Traditional APIs
+Slide Visual: A side-by-side comparison table. Left side: Traditional APIs (Upstream/Downstream Systems). Right side: MCP (AI Agents). Speaker Notes: "If you are a backend developer, you might be wondering, 'Don't traditional REST APIs already do this?' Not exactly. Traditional APIs are built for upstream or downstream systems and human developers. They require us to manually read documentation, map out explicit endpoints, and handle stateless requests
+. MCP is built specifically for AI agents. Instead of explicit endpoints, MCP allows an AI agent to dynamically ask, 'What capabilities do you have?' The MCP server responds with a list of tools the AI can automatically understand and use
+. Plus, MCP maintains stateful sessions, allowing the AI to chain multiple operations together logically
+."
+Slide 6: The Three Core Primitives
+Slide Visual: Icons representing "Resources" (documents), "Prompts" (templates), and "Tools" (gears/functions). Speaker Notes: "So, what exactly does your MCP server give to the AI? It exposes three core primitives:
+Resources: Think of these as read-only context. It’s data the AI can read, like file contents, database schemas, or live logs
+.
+Prompts: These are reusable templates that help structure interactions, giving the AI specific instructions or few-shot examples
+.
+Tools: These are executable functions. This allows the AI to actually do things—like running a database query, pushing code to GitHub, or calling an API
+. Tools are what make your AI agent truly active."
+Slide 7: Hands-on Session – Building a Banking Assistant (Part 1)
+Slide Visual: Architecture map of our mockup: Cursor/Claude (Host) -> Python/TS MCP Server -> Mock Bank Data (JSON/Variables). Speaker Notes: "Enough theory—let’s build! For the rest of the session, we are going to build a functional Banking Assistant MCP Server. Imagine we work at a bank and want to let an AI securely assist customers. We are going to spin up a mockup bank server. We’ll hardcode some mock data—a few user accounts with balances and transaction histories. Our goal is to connect this fake data to our AI using MCP, so we can literally chat with our bank account."
+Slide 8: Hands-on Session – Building a Banking Assistant (Part 2)
+Slide Visual: Code snippets showing the creation of tools like get_balance(account_id) and transfer_funds(from, to, amount). Speaker Notes: "Here is where the magic happens. Whether you are using Python with FastMCP or the official TypeScript SDK, exposing a tool is incredibly simple
+. We will define two functions: get_balance and transfer_funds. We wrap these in our MCP tool decorators, defining exactly what arguments they take
+. (Pause and walk the audience through the code snippet). Notice how we use strict schemas so the AI knows exactly what data types to send
+. Let's fire up our server and connect it to our AI client!"
+Slide 9: Hands-on Session – The Live Test
+Slide Visual: A screenshot or live terminal view showing a chat prompt: "What is my current balance, and can you send $50 to account 899?" and the AI executing the tools. Speaker Notes: "Now for the fun part. Inside our AI app, we simply ask: 'What is the balance of account 123, and can you send $50 to account 456?' Because we hooked up our MCP server, the AI doesn't just guess. It discovers our tools, uses get_balance, reads the mock data, and then securely structures a request for transfer_funds
+. (Run the live demo). Look at that! The AI converted a natural language request into a sequence of secure, structured backend operations. And the best part? It abstracts the messy JSON responses into a clean, conversational answer for the user
+."
+Slide 10: The Developer Opportunity & Q&A
+Slide Visual: Text: "From Backend Service to AI-Enabled Developer." Speaker Notes: "What we just built changes everything. You didn't have to learn a complex new AI architecture; you just built a backend service and exposed it using standard tools
+. MCP allows you to transition your existing skills into the AI ecosystem. You are now an AI-enabled developer
+. The code you write to pull data from a legacy system can now instantly empower the world's most advanced language models. Thank you all for your time. Let's open up the floor to any questions!"

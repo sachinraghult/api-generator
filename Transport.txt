@@ -69,3 +69,18 @@ Notifications provide real-time synchronization
 Start typing…
 (10)
 NotebookLM can be inaccurate; please double-check its 
+
+
+
+
+
+Real-time AI synchronization is achieved by moving from a "pull" model (polling) to a "push" model, where the server acts as an active partner that informs the AI agent immediately when data changes
+
+Model Context Protocol (MCP) Notifications: MCP servers allow AI applications to subscribe to changes. When a file updates or a new tool is added, the server sends a JSON-RPC 2.0 notification to the client 
+Model Context Protocol
+Model Context Protocol
+. The AI immediately updates its tool registry, ensuring it acts on the latest capabilities 
+Model Context Protocol
+Model Context Protocol
+.
+Event-Driven Webhooks: Instead of scheduled checks, systems like Trigger.dev use webhooks to push data to an AI agent the moment a file changes, a task completes, or a new document is added

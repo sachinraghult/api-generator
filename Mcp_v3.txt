@@ -1,0 +1,46 @@
+Also one funnier interactive version
+
+Here are the speaker notes for a fun, interactive, and slightly irreverent version of your presentation. This is designed to get some laughs, keep developers awake, and make the concepts stick.
+Slide 1: Title Slide
+Slide Visual: Bold title "Model Context Protocol (MCP): The USB-C for AI." Subtitle: "Because writing custom API wrappers is soul-crushing." Speaker Notes: "Welcome, everyone! Quick show of hands—who here has a drawer at home filled with at least fifteen random cables you’re afraid to throw away? Exactly. Before USB-C came along, connecting devices was a nightmare
+. Today, we’re talking about the Model Context Protocol, or MCP. It is literally the USB-C for AI applications
+. By the end of this session, you’ll know how to plug your code directly into AI brains, and we’re going to build a fake bank together. Let’s get into it."
+Slide 2: The Core AI Problem
+Slide Visual: A brain in a jar labeled "LLM", looking very sad and isolated. Speaker Notes: "Here is the problem with AI today. Models like Claude and ChatGPT are incredibly smart—they've read the whole internet. But out of the box, they are like that one brilliant friend who lives in a cave. They don’t know what’s on your laptop, they don't know your company's database schema, and they definitely don’t know what you had for lunch
+. If you want them to know things, you have to constantly copy-paste data into the chat. MCP was created so we can finally stop copy-pasting
+."
+Slide 3: The N × M Integration Nightmare
+Slide Visual: A tangled ball of yarn connecting logos of AI models to logos of tools (GitHub, Slack, Jira). Text: "N × M = Your Weekend Gone." Speaker Notes: "Before MCP, if you wanted three different AI models to talk to three different tools, you had to write nine different custom integrations
+. Anthropic calls this the 'N × M problem'
+. I call it 'job security,' but the bad kind. MCP turns this into a simple N + M scenario
+. You build an MCP server once, and suddenly any AI that speaks MCP can use your tool
+. You write code once, and you get your weekends back."
+Slide 4: Architecture (It's simpler than you think)
+Slide Visual: A super simple diagram: Host (AI) -> Client -> Server (Your Code) -> Database. Speaker Notes: "If you hear 'protocol' and 'server' and immediately start worrying about configuring Kubernetes clusters, relax. The architecture is just an AI Host (like Claude Desktop or Cursor), a Client, and your MCP Server
+. And here is the best part for local development: the client and server talk directly through standard input and output—good old stdio
+. Yes, the exact same stdout you use to console.log('here') when debugging. It's incredibly fast and has zero network overhead
+."
+Slide 5: APIs vs. MCP
+Slide Visual: A meme or table comparing a grumpy security guard (Traditional API) to a friendly buffet host (MCP). Speaker Notes: "So, why not just use REST APIs? Traditional APIs are for human developers. You have to read the docs, hit explicit endpoints, and they are totally stateless
+. MCP is built for AI agents. With MCP, the AI literally walks up to your server and asks, 'Hey, what can you do?' and your server responds with a list of capabilities
+. Plus, MCP uses stateful sessions, so the AI actually remembers what it's doing across multiple steps
+."
+Slide 6: The Holy Trinity of MCP
+Slide Visual: Three giant icons: A Book (Resources), A Megaphone (Prompts), and a Wrench (Tools). Speaker Notes: "Your MCP server basically offers the AI a menu with three items:
+Resources: Read-only data. 'Here is a log file, go read it.'
+Prompts: Reusable templates. 'Here is exactly how I want you to format this.'
+Tools: Executable functions. 'Here is a wrench, go fix the database.'
+ Tools are where the magic happens. Just... be careful what tools you give it. Please do not give the AI a tool that drops your production tables."
+Slide 7: Let's Build a Bank! (Hands-on Part 1)
+Slide Visual: A hacker cat typing fast. Text: "Fake Bank Server." Speaker Notes: "Okay, enough theory. Let’s build a bank. Don't worry, we are mocking the data, so you can't accidentally wire your life savings to a stranger. We want to let an AI securely assist customers. We are going to spin up an MCP server with Python or TypeScript, hardcode some fake accounts with some fake money, and hook it up to Claude."
+Slide 8: Giving the AI Tools (Hands-on Part 2)
+Slide Visual: A clean code snippet showing an @mcp.tool() decorator over a transfer_funds function. Speaker Notes: "To make this work, we just write standard backend functions—like get_balance and transfer_funds
+. To make the AI understand them, we just slap a tool decorator on them and define a strict JSON schema
+. The schema is essentially the bouncer telling the AI, 'You must provide a string for the account ID, or you aren't getting in.' It’s that simple. Let’s fire up the server."
+Slide 9: The Magic Trick (Live Demo)
+Slide Visual: Live terminal/chat. "Hey AI, what's my balance and can you send $50 to Bob?" Speaker Notes: "Now we go to our AI and ask: 'What is the balance of account 123, and can you send $50 to account 456?' [Audience watches AI execute the tools] Look at that! The AI read our tools, checked the balance, realized we had enough fake money, and structured a perfect JSON request to transfer the funds
+. It did all the heavy lifting and gave us a nice, conversational answer. We just taught a language model how to be a bank teller in 10 minutes."
+Slide 10: Don't Let the AI Go Rogue
+Slide Visual: Text: "Elicitation = Human in the Loop." Followed by "You are now AI-Enabled Developers." Speaker Notes: "Now, before you go hook up your real bank account, MCP has built-in safety features. It supports something called 'Elicitation', which basically means the server can pause and ask the human, 'Are you SURE you want to do this?' before executing a sensitive action
+. So, the robots aren't taking over entirely without our permission. You now know how to build the 'USB-C' cables for AI. You aren't just backend developers anymore; you are AI-enabled developers
+. Thank you! Who has questions?"

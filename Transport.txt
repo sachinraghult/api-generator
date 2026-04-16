@@ -16,3 +16,8 @@ The Key Takeaway: The Transport Layer completely abstracts the networking
 Start typing…
 (10)
 Notebo
+
+
+JSON-RPC 2.0 provides the structured, predictable formatting that allows an AI model to seamlessly discover tools, fetch resources, and interact with external systems under a single, universal standard
+
+Standard JSON-RPC 2.0 requests include a unique id field. This ensures that when an AI client sends a request, it can reliably correlate the server's eventual response back to that exact request
